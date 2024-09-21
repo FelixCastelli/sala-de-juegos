@@ -1,0 +1,101 @@
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #333;
+}
+
+.login-container {
+    background-color: #222;
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    font-family: 'Roboto', sans-serif;
+    width: 300px;
+}
+
+.login-titulo {
+    color: white;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    color: white;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #444;
+    color: white;
+    outline: none;
+    font-family: 'Roboto', sans-serif;
+}
+
+input::placeholder {
+    color: #aaa;
+}
+
+.button-group {
+    margin-top: 20px;
+}
+
+.btn-login, .btn-registro, .btn-autocompletar {
+    width: 100%; /* Ensure all buttons take full width */
+    height: 38px; /* Set a fixed height for buttons */
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-login {
+    background-color: #1DB954;
+    color: white;
+}
+
+.btn-login:hover {
+    background-color: #1ed760;
+    transform: scale(1.05);
+}
+
+.btn-registro {
+    background-color: #555;
+    color: white;
+}
+
+.btn-registro:hover {
+    background-color: #666;
+    transform: scale(1.05);
+}
+
+.btn-autocompletar {
+    background-color: #777;
+    color: white;
+}
+
+.btn-autocompletar:hover {
+    background-color: #888;
+    transform: scale(1.05);
+}
+
+.error-mensaje {
+    color: red;
+    margin-top: 10px;
+}

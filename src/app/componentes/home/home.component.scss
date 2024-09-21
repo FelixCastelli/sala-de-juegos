@@ -1,0 +1,75 @@
+:host {
+  display: block;
+  height: 100vh;
+  background-color: #333;
+}
+
+.home-container {
+  padding: 0 20px;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #444;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  margin-bottom: 20px;
+}
+
+.button-container {
+  margin-right: 10px;
+}
+
+.btn-quien-soy {
+  background-color: #1DB954;
+  color: white;
+  border-radius: 8px;
+  padding: 10px 20px;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-quien-soy:hover {
+  background-color: #1ed760;
+  transform: scale(1.05);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-email {
+  background-color: #6cb6f2;
+  color: white;
+  border-radius: 8px;
+  padding: 5px 10px;
+  margin-right: 10px;
+}
+
+.btn-log-out {
+  background-color: #ff4757;
+  color: white;
+  border-radius: 8px;
+  padding: 10px 20px;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-log-out:hover {
+  background-color: #ff6b81;
+  transform: scale(1.05);
+}

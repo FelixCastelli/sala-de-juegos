@@ -1,0 +1,28 @@
+<!-- <div class="title-container">
+    <h1 class="login-title">Sala de Juegos</h1>
+  </div> -->
+  <div class="login-container">
+    <h1 class="login-titulo">Login</h1>
+  
+    <form (ngSubmit)="logIn()">
+      <div class="input-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" [(ngModel)]="email" name="email" required>
+      </div>
+      <div class="input-group">
+        <label for="password">Contraseña:</label>
+        <input type="password" id="contrasenia" [(ngModel)]="contrasenia" name="contrasenia" required>
+      </div>
+  
+      <div class="button-group">
+        <button class="btn-login" type="submit">Login</button>
+        <button class="btn-registro" type="button" (click)="irARegistro()">Registrarse</button>
+        <button class="btn-login" type="button" (click)="autoCompletar()">Auto Completar</button>
+      </div>
+  
+      <div *ngIf="!exito" class="error-mensaje">
+        {{ error }}
+      </div>
+    </form>
+  </div>
+  
