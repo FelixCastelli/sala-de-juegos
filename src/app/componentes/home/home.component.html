@@ -13,4 +13,20 @@
       <button (click)="irALogIn()" class="btn-log-in">Log In</button>
     </ng-template>
   </div>
+
+  <button *ngIf="usuario" (click)="toggleChat()" class="btn-chat">
+    {{ chatAbierto ? 'Cerrar Chat' : 'Chat' }}
+  </button>
+
+  <div *ngIf="chatAbierto && usuario" class="chat-box">
+    <div class="mensajes" style="overflow-y: auto; height: 300px;">
+      <div *ngFor="let msj of mensajes">
+        <strong>{{ msj.emisor }}</strong> 
+        <small>{{ msj.timestamp | date: 'short' }}</small>
+        <span>{{ msj.texto }}</span>
+      </div>
+    </div>
+    <input [(ngModel)]="mensajeNuevo" placeholder="Escribe un mensaje..." />
+    <button (click)="enviarMensaje()">→</button>
+  </div>
 </div>

@@ -51,5 +51,6 @@ export class LoginComponent implements AfterViewInit {
 
     irAHome() {
       this.router.navigate(['/home']);
+      
     }
 }
