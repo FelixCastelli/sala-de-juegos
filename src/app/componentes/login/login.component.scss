@@ -1,12 +1,28 @@
 :host {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     height: 100vh;
     background-color: #333;
-}
-
-.login-container {
+  }
+  
+  .header-title {
+    background-color: #000000;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    color: #1DB954;
+  }
+  
+  .login-title {
+    font-size: 28px;
+    margin: 0;
+  }
+  
+  .login-container {
     background-color: #222;
     padding: 40px;
     border-radius: 10px;
@@ -14,26 +30,26 @@
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
     font-family: 'Roboto', sans-serif;
     width: 300px;
-}
-
-.login-titulo {
+  }
+  
+  .login-titulo {
     color: white;
     margin-bottom: 20px;
     font-size: 24px;
-}
-
-.input-group {
+  }
+  
+  .input-group {
     margin-bottom: 15px;
-}
-
-label {
+  }
+  
+  label {
     color: white;
     font-size: 14px;
     display: block;
     margin-bottom: 5px;
-}
-
-input {
+  }
+  
+  input {
     width: calc(100% - 20px);
     padding: 10px;
     border: none;
@@ -43,19 +59,22 @@ input {
     color: white;
     outline: none;
     font-family: 'Roboto', sans-serif;
-}
-
-input::placeholder {
+  }
+  
+  input::placeholder {
     color: #aaa;
-}
-
-.button-group {
+  }
+  
+  .button-group {
     margin-top: 20px;
-}
-
-.btn-login, .btn-registro, .btn-autocompletar {
-    width: 100%; /* Ensure all buttons take full width */
-    height: 38px; /* Set a fixed height for buttons */
+  }
+  
+  .btn-login,
+  .btn-registro,
+  .btn-autocompletar,
+  .btn-home {
+    width: 100%;
+    height: 38px;
     margin-bottom: 10px;
     border: none;
     border-radius: 8px;
@@ -63,39 +82,57 @@ input::placeholder {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.btn-login {
+  }
+  
+  .btn-login {
     background-color: #1DB954;
     color: white;
-}
-
-.btn-login:hover {
+  }
+  
+  .btn-login:hover {
     background-color: #1ed760;
     transform: scale(1.05);
-}
-
-.btn-registro {
+  }
+  
+  .btn-registro {
     background-color: #555;
     color: white;
-}
-
-.btn-registro:hover {
+  }
+  
+  .btn-registro:hover {
     background-color: #666;
     transform: scale(1.05);
-}
-
-.btn-autocompletar {
+  }
+  
+  .btn-autocompletar {
     background-color: #777;
     color: white;
-}
-
-.btn-autocompletar:hover {
+  }
+  
+  .btn-autocompletar:hover {
     background-color: #888;
     transform: scale(1.05);
-}
-
-.error-mensaje {
+  }
+  
+  .error-mensaje {
     color: red;
     margin-top: 10px;
-}
+  }
+  
+  .btn-home {
+    width: 50%;
+    height: 38px;
+    background-color: #ff4757;
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .btn-home:hover {
+    background-color: #ff6b81;
+    transform: scale(1.05);
+  }
+  

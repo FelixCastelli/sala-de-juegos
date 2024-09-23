@@ -48,4 +48,8 @@ export class LoginComponent implements AfterViewInit {
       this.router.navigate(['/registro']);
 
     }
+
+    irAHome() {
+      this.router.navigate(['/home']);
+    }
 }

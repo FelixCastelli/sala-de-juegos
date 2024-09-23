@@ -3,9 +3,14 @@
     <div class="button-container">
       <button (click)="irAQuienSoy()" class="btn-quien-soy">Quien Soy</button>
     </div>
-    <div class="user-info">
+
+    <div class="user-info" *ngIf="usuario; else loginButton">
       <span class="user-email">{{ usuario?.email }}</span>
       <button (click)="logOut()" class="btn-log-out">Log Out</button>
     </div>
+
+    <ng-template #loginButton>
+      <button (click)="irALogIn()" class="btn-log-in">Log In</button>
+    </ng-template>
   </div>
 </div>
