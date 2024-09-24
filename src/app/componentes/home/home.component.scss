@@ -105,13 +105,13 @@
   position: fixed;
   bottom: 80px;
   right: 20px;
-  width: 350px; /* Aumentar el ancho */
-  max-height: 350px; /* Aumentar el alto */
+  width: 350px;
+  max-height: 350px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   overflow-y: auto;
 
   .mensajes {
-    max-height: 250px; /* Ajustar el espacio disponible para los mensajes */
+    max-height: 250px;
     overflow-y: auto;
     margin-bottom: 10px;
 
@@ -125,8 +125,8 @@
     strong {
       margin-right: 5px;
       font-size: 0.8em;
-      color: #fff; /* Nombre en blanco */
-      font-weight: bold; /* Nombre en bold */
+      color: #fff;
+      font-weight: bold;
     }
 
     small {
