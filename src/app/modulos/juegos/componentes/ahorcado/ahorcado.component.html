@@ -1,0 +1,44 @@
+<div class="ahorcado-container">
+    <button (click)="volverAlHome()" class="btn-volver">←</button>
+    <h1>Ahorcado</h1>
+
+    <div *ngIf="!juegoIniciado" class="modal">
+        <h2>¿Estás listo para jugar?</h2>
+        <button (click)="iniciarJuego()" class="btn-si">Sí</button>
+        <button (click)="volverAlHome()" class="btn-volver">Volver</button>
+    </div>
+
+    <div *ngIf="juegoIniciado">
+        <img [src]="obtenerImagenAhorcado()" alt="Ahorcado Imagen" class="ahorcado-imagen">
+
+        <div class="palabra">
+            <span *ngFor="let letra of letrasAdivinadas">{{ letra }}</span>
+        </div>
+
+        <div class="teclado">
+            <button *ngFor="let letra of letras"
+                    (click)="adivinarLetra(letra)"
+                    [disabled]="letrasIncorrectas.includes(letra) || letrasAdivinadas.includes(letra) || juegoGanado || juegoPerdido">
+                {{ letra }}
+            </button>
+        </div>
+
+        <div class="intentos">
+            <p>Intentos restantes: {{ intentos - intentosUsados }}</p>
+        </div>
+    </div>
+
+    <div *ngIf="juegoGanado" class="ganado">
+        <h2>¡Felicitaciones ganaste!</h2>
+        <p>La palabra era: '{{ palabraSeleccionada }}'</p>
+        <button (click)="volverAlHome()" class="btn-volver">Volver</button>
+        <button (click)="iniciarJuego()" class="btn-si">Volver a Intentar</button>
+    </div>
+
+    <div *ngIf="juegoPerdido" class="perdido">
+        <h2>¡Perdiste!</h2>
+        <p>La palabra era: '{{ palabraSeleccionada }}'</p>
+        <button (click)="volverAlHome()" class="btn-volver">Volver</button>
+        <button (click)="iniciarJuego()" class="btn-si">Volver a Intentar</button>
+    </div>
+</div>

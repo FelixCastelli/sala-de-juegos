@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   mensajeNuevo: string = '';
   chatAbierto = false;
   subscripcion!: Subscription;
+  mostrarMensaje = false;
   
   constructor(private router: Router, private firebaseService: FirebaseService, private firestore: Firestore) {}
 
@@ -38,6 +39,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   irALogIn() {
     this.router.navigate(['/login']);
 
+  }
+
+  irAAhorcado() {
+    if (!this.usuario) {
+      this.mostrarMensaje = true;
+      return;
+    }
+    this.mostrarMensaje = false;
+    this.router.navigate(['/juegos/ahorcado']);
   }
 
   async logOut() {

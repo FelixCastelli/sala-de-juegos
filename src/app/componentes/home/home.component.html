@@ -14,7 +14,11 @@
     </ng-template>
   </div>
 
-  <button *ngIf="usuario" (click)="toggleChat()" class="btn-chat">
+  <div class="alert-message" *ngIf="!usuario && mostrarMensaje">
+    Necesitas estar logeado para jugar
+  </div>
+
+  <button *ngIf="usuario" (click)="toggleChat()" class="btn-chat" [ngClass]="{'btn-cerrar-chat': chatAbierto}">
     {{ chatAbierto ? 'Cerrar Chat' : 'Chat' }}
   </button>
 
@@ -28,5 +32,11 @@
     </div>
     <input [(ngModel)]="mensajeNuevo" placeholder="Escribe un mensaje..." />
     <button (click)="enviarMensaje()">→</button>
+  </div>
+
+  <div class="juegos-container">
+    <h2>Ahorcado</h2>
+    <img src="https://firebasestorage.googleapis.com/v0/b/sala-de-juegos-59d90.appspot.com/o/el-ahorcado.jpg?alt=media&token=9d6a53da-fb76-42cb-8b32-846e8c883391" 
+         alt="Ahorcado" class="ahorcado-imagen" (click)="irAAhorcado()">
   </div>
 </div>
