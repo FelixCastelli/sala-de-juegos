@@ -50,6 +50,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['/juegos/ahorcado']);
   }
 
+  irAMayorOMenor() {
+    if (!this.usuario) {
+      this.mostrarMensaje = true;
+      return;
+    }
+    this.mostrarMensaje = false;
+    this.router.navigate(['/juegos/mayorOMenor']);
+  }
+
   async logOut() {
     await this.firebaseService.logOut();
     this.usuario = this.firebaseService.getCurrentUser();

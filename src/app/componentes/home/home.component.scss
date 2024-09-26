@@ -179,9 +179,9 @@
 
 .juegos-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
   margin: 50px 0;
   padding: 15px 20px;
   background-color: #444;
@@ -189,12 +189,18 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 }
 
-h2 {
-  color: white;
-  margin-bottom: 10px;
+.item-juego {
+  text-align: center;
+  margin: 10px;
 }
 
-.ahorcado-imagen {
+.item-juego h2 {
+  color: white;
+  margin-bottom: 10px
+}
+
+.ahorcado-imagen,
+.mayor-menor-imagen {
   width: 300px;
   height: auto;
   cursor: pointer;

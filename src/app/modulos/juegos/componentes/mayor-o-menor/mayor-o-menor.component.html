@@ -1,0 +1,54 @@
+<div class="mayor-o-menor-container">
+    <button (click)="volverAlHome()" class="btn-volver">←</button>
+    <h1>Mayor o Menor</h1>
+
+    <div *ngIf="!juegoIniciado" class="inicio-juego">
+        <h2>¿Estás listo para jugar?</h2>
+        <div class="modal-buttons">
+            <button (click)="iniciarJuego()" class="btn-si">Sí</button>
+            <button (click)="volverAlHome()" class="btn-volver">Volver</button>
+        </div>
+    </div>
+
+    <div *ngIf="juegoIniciado">
+        <div class="cartas-container">
+            <div class="display-cartas">
+                <h3>Carta Actual:</h3>
+                <img *ngIf="cartaActual" [src]="cartaActual.src" alt="Carta actual" class="carta">
+            </div>
+
+            <div class="puntaje">
+                <h2>Puntuación: {{ puntos }}</h2>
+            </div>
+
+            <div *ngIf="!juegoPerdido" class="proxima-carta-container">
+                <h3>Próxima Carta:</h3>
+                <div class="cartas">
+                    <img [src]="cartaEscondida" alt="Carta dada vuelta" class="carta carta-escondida">
+                </div>
+            </div>
+
+            <div *ngIf="juegoPerdido" class="proxima-carta-container">
+                <h3>La Carta era:</h3>
+                <div class="cartas">
+                    <img *ngIf="proximaCarta" [src]="proximaCarta.src" alt="Siguiente Carta" class="carta">
+                </div>
+            </div>
+        </div>
+
+        <div class="botones-adivinar">
+            <h3 *ngIf="!juegoPerdido">La próxima carta es...</h3>
+            <button (click)="adivinaMayor()" 
+                    [disabled]="juegoPerdido" 
+                    class="btn-mayor">Mayor</button>
+            <button (click)="adivinaMenor()" 
+                    [disabled]="juegoPerdido" 
+                    class="btn-menor">Menor</button>
+        </div>
+
+        <div *ngIf="juegoPerdido" class="partida-perdida">
+            <h2>¡Perdiste!</h2>
+            <button (click)="iniciarJuego()" class="btn-si">Jugar de nuevo</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,139 @@
+.mayor-o-menor-container {
+    background-color: rgba(29, 185, 84, 0.1);
+    color: white;
+    padding: 40px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+
+    h1 {
+        margin-bottom: 20px;
+    }
+
+    .inicio-juego {
+        h2 {
+            margin: 20px 0;
+            font-size: 28px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+
+            .btn-si {
+                margin-right: 10px;
+            }
+        }
+    }
+
+    .cartas-container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-bottom: 20px;
+
+        .display-cartas,
+        .proxima-carta-container {
+            flex: 1;
+            text-align: center;
+        }
+    }
+
+    .botones-adivinar {
+        margin-top: 20px;
+
+        button {
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &[disabled] {
+                background-color: #ccc;
+                color: #666;
+                cursor: not-allowed;
+
+                &:hover {
+                    background-color: #ccc;
+                    color: #666;
+                }
+            }
+        }
+
+        .btn-mayor {
+            background-color: #ff201d;
+
+            &:hover {
+                background-color: #ff3c3c;
+            }
+        }
+
+        .btn-menor {
+            background-color: #00bfff;
+
+            &:hover {
+                background-color: #36b2ff;
+            }
+        }
+    }
+
+    .btn-volver {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background-color: #f44336;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 8px 10px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+
+        &:hover {
+            background-color: #c62828;
+            transform: scale(1.05);
+        }
+    }
+
+    .btn-si {
+        background-color: #1DB954;
+        color: white;
+        font-size: 16px;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+
+        margin-top: 10px;
+
+        &:hover {
+            background-color: #1ed760;
+            transform: scale(1.05);
+        }
+    }
+
+    .partida-perdida {
+        background-color: rgba(244, 67, 54, 0.8);
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        margin-top: 20px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+
+        h2 {
+            margin: 0;
+            font-size: 32px;
+        }
+    }
+}
