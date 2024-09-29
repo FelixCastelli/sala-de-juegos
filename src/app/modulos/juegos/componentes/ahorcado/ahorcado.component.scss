@@ -8,9 +8,19 @@
     font-family: 'Roboto', sans-serif;
     position: relative;
 
-    .ahorcado-imagen {
-        width: 200px;
-        height: auto;
+    .image-container {
+        position: relative;
+        margin-bottom: 20px;
+
+        .ahorcado-imagen {
+            width: 500px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+    }
+
+    .explicacion-juego {
+        color: white;
         margin-bottom: 20px;
     }
 

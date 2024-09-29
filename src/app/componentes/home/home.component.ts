@@ -28,17 +28,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.usuario = this.firebaseService.getCurrentUser();
     this.cargarMensajes();
-    
   }
 
   irAQuienSoy() {
     this.router.navigate(['/quien-soy']);
-
   }
 
   irALogIn() {
     this.router.navigate(['/login']);
-
   }
 
   irAAhorcado() {
@@ -63,7 +60,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     await this.firebaseService.logOut();
     this.usuario = this.firebaseService.getCurrentUser();
     this.router.navigate(['/home']);
-
   }
 
   abrirChat() {
@@ -71,7 +67,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (chatBox) {
       chatBox.classList.toggle('hidden');
     }
-
   }
 
   async enviarMensaje() {
@@ -79,13 +74,17 @@ export class HomeComponent implements OnInit, OnDestroy {
       const fecha = new Date();
       const hora = fecha.getHours();
       const minutos = fecha.getMinutes();
+      const dia = String(fecha.getDate()).padStart(2, '0');
+      const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+      const anio = fecha.getFullYear();
+      const fechaFormateada = `${dia}/${mes}/${anio}`;
       const tiempo = `${String(hora).padStart(2, '0')}:${String(minutos).padStart(2, '0')}`;
 
       const col = collection(this.firestore, 'mensajes');
       const objMensaje = {
         id: this.usuario?.uid,
         usuario: this.usuario?.email,
-        hora: tiempo,
+        hora: `${fechaFormateada} ${tiempo}`,
         mensaje: this.mensajeNuevo,
         timestamp: Timestamp.now()
       };
@@ -93,8 +92,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       await addDoc(col, objMensaje);
 
       this.mensajeNuevo = '';
+      this.scrollearAlFondo();
     }
-
   }
 
   cargarMensajes() {
@@ -109,20 +108,26 @@ export class HomeComponent implements OnInit, OnDestroy {
         hora: item.hora,
         timestamp: item.timestamp.toDate()
       }));
-
+      this.scrollearAlFondo();
     });
-
   }
 
   toggleChat() {
     this.chatAbierto = !this.chatAbierto;
-
   }
 
   ngOnDestroy(): void {
     if (this.subscripcion) {
       this.subscripcion.unsubscribe();
     }
+  }
 
+  scrollearAlFondo() {
+    const chatBox = document.getElementById('chatBox');
+    if (chatBox) {
+      setTimeout(() => {
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 100);
+    }
   }
 }

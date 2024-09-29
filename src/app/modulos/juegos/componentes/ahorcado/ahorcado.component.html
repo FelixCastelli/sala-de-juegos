@@ -4,6 +4,22 @@
 
     <div *ngIf="!juegoIniciado" class="modal">
         <h2>¿Estás listo para jugar?</h2>
+        
+        <div class="image-container">
+            <img src="https://firebasestorage.googleapis.com/v0/b/sala-de-juegos-59d90.appspot.com/o/el-ahorcado.jpg?alt=media&token=9d6a53da-fb76-42cb-8b32-846e8c883391" 
+            alt="Ahorcado" class="ahorcado-imagen">
+        </div>
+
+        <p class="explicacion-juego">
+            Tenes que adivinar las palabras letra por letra.
+            <br><br>
+            Hay 6 intentos y vas sumando puntos en base a los intentos que te queden al finalizar cada palabra.
+            <br><br>
+            Si te quedas sin intentos, perdes el juego.
+            <br><br>
+            Cuando termines todas las palabras o pierdas, el puntaje final será el que va a ir al ranking.
+        </p>
+
         <button (click)="iniciarJuego()" class="btn-si">Sí</button>
         <button (click)="volverAlHome()" class="btn-volver">Volver</button>
     </div>
@@ -28,17 +44,26 @@
         </div>
     </div>
 
+    <div *ngIf="rondaGanada" class="ganado">
+        <h2>¡Felicitaciones ganaste la Ronda!</h2>
+        <p>La palabra era: '{{ palabraSeleccionada }}'</p>
+        <p>Puntuacion Actual: {{ puntos }}</p>
+        <button (click)="iniciarJuego()" class="btn-si">Siguiente palabra</button>
+    </div>
+
     <div *ngIf="juegoGanado" class="ganado">
         <h2>¡Felicitaciones ganaste!</h2>
         <p>La palabra era: '{{ palabraSeleccionada }}'</p>
+        <p>Puntuacion Final: {{ puntos }}</p>
         <button (click)="volverAlHome()" class="btn-volver">Volver</button>
-        <button (click)="iniciarJuego()" class="btn-si">Volver a Intentar</button>
+        <button (click)="reiniciarJuego()" class="btn-si">Jugar de Nuevo</button>
     </div>
 
     <div *ngIf="juegoPerdido" class="perdido">
         <h2>¡Perdiste!</h2>
         <p>La palabra era: '{{ palabraSeleccionada }}'</p>
+        <p>Puntuacion Final: {{ puntos }}</p>
         <button (click)="volverAlHome()" class="btn-volver">Volver</button>
-        <button (click)="iniciarJuego()" class="btn-si">Jugar de nuevo</button>
+        <button (click)="iniciarJuego()" class="btn-si">Volver a Intentar</button>
     </div>
 </div>

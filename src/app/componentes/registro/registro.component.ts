@@ -22,6 +22,7 @@ export class RegistroComponent {
   constructor(private firebaseService: FirebaseService, private firestore : Firestore, private router : Router) {}
 
   async registrarse() {
+    
     try{
           await this.firebaseService.registro(this.email, this.contrasenia).then(() => {
           let col = collection(this.firestore, 'logins');
@@ -32,8 +33,25 @@ export class RegistroComponent {
     }
     catch(e:any){
       this.exito = false;
-      this.error = "La dirección de correo electrónico ya está en uso.";
+      this.manejoErrores(e.code);
+    }
+  }
 
+
+  private manejoErrores(codigo: string) {
+    switch (codigo) {
+      case 'auth/email-already-in-use':
+        this.error = "La dirección de correo electrónico ya está en uso.";
+        break;
+      case 'auth/invalid-email':
+        this.error = 'La dirección de correo electrónico no es válida.';
+        break;
+      case 'auth/weak-password':
+        this.error = 'La contraseña es demasiado débil. Debe tener al menos 6 caracteres.';
+        break;
+      default:
+        this.error = "Ocurrió un error. Por favor, intenta nuevamente.";
+        break;
     }
   }
 

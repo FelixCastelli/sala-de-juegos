@@ -113,8 +113,8 @@
   position: fixed;
   bottom: 80px;
   right: 20px;
-  width: 350px;
-  max-height: 350px;
+  width: 600px;
+  max-height: 450px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   overflow-y: auto;
 
@@ -128,24 +128,55 @@
       justify-content: flex-start;
       align-items: baseline;
       margin-bottom: 8px;
+
+      &.mensaje-usuario {
+        justify-content: flex-end;
+        text-align: right;
+
+        strong, small, span {
+          color: #fff;
+        }
+
+        span {
+          background-color: #1e90ff;
+          padding: 10px 15px;
+          border-radius: 15px;
+          display: inline-block;
+          color: white;
+        }        
+      }
+
+      &.mensaje-otros {
+        justify-content: flex-start;
+        text-align: left;
+
+        strong, small, span {
+          color: #bbb;
+        }
+
+        span {
+          background-color: #28a745;
+          padding: 10px 15px;
+          border-radius: 15px;
+          display: inline-block;
+          color: white;
+        }
+      }
     }
 
     strong {
       margin-right: 5px;
       font-size: 0.8em;
-      color: #fff;
       font-weight: bold;
     }
 
     small {
       font-size: 0.8em;
-      color: #bbb;
       margin-right: 10px;
     }
 
     span {
       font-size: 0.8em;
-      color: #fff;
     }
   }
 
@@ -196,7 +227,7 @@
 
 .item-juego h2 {
   color: white;
-  margin-bottom: 10px
+  margin-bottom: 10px;
 }
 
 .ahorcado-imagen,
@@ -205,6 +236,7 @@
   height: auto;
   cursor: pointer;
   transition: transform 0.3s ease;
+  border-radius: 8px;
 
   &:hover {
     transform: scale(1.05);
@@ -219,4 +251,3 @@
   border-radius: 5px;
   margin: 10px 0;
 }
-

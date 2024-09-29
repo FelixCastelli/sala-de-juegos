@@ -18,6 +18,16 @@
             font-size: 28px;
         }
 
+        .image-container {
+            position: relative;
+            margin-bottom: 20px;
+    
+            .mayor-o-menor-imagen {
+                width: 500px;
+                border-radius: 8px;
+            }
+        }
+
         .modal-buttons {
             display: flex;
             justify-content: center;
@@ -26,6 +36,11 @@
             .btn-si {
                 margin-right: 10px;
             }
+        }
+
+        .explicacion-juego {
+            color: white;
+            margin-bottom: 20px;
         }
     }
 
@@ -122,8 +137,8 @@
         }
     }
 
-    .partida-perdida {
-        background-color: rgba(244, 67, 54, 0.8);
+    .partida-terminada {
+        background-color: rgba(76, 175, 80, 0.8);
         color: white;
         padding: 20px;
         border-radius: 8px;

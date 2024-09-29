@@ -27,6 +27,10 @@ export class AhorcadoComponent {
   juegoIniciado: boolean = false;
   juegoGanado: boolean = false;
   juegoPerdido: boolean = false;
+  puntos: number = 0;
+  palabrasUsadas: string[] = [];
+  rondasGanadas: number = 0;
+  rondaGanada: boolean = false;
 
   constructor(private router: Router) { }
 
@@ -38,19 +42,24 @@ export class AhorcadoComponent {
     this.juegoIniciado = true;
     this.juegoGanado = false;
     this.juegoPerdido = false;
-    
+    this.rondaGanada = false;
   }
 
   palabraRandom(): string {
-    return this.palabras[Math.floor(Math.random() * this.palabras.length)];
+    const palabrasDisponibles = this.palabras.filter(word => !this.palabrasUsadas.includes(word));
 
+    if (palabrasDisponibles.length === 0) {
+      this.juegoGanado = true;
+      return '';
+    }
+
+    return palabrasDisponibles[Math.floor(Math.random() * palabrasDisponibles.length)];
   }
 
   adivinarLetra(letra: string) {
     if (this.letrasAdivinadas.includes(letra) || this.letrasIncorrectas.includes(letra)) {
       return;
     }
-
     if (this.palabraSeleccionada.includes(letra)) {
       for (let i = 0; i < this.palabraSeleccionada.length; i++) {
         if (this.palabraSeleccionada[i] === letra) {
@@ -61,35 +70,50 @@ export class AhorcadoComponent {
       this.intentosUsados++;
       this.letrasIncorrectas.push(letra);
     }
-
     this.verificarEstadoJuego();
-    
   }
 
   verificarEstadoJuego() {
     if (this.letrasAdivinadas.join('') === this.palabraSeleccionada) {
-      this.juegoGanado = true;
-    }
+      this.puntos += this.intentos - this.intentosUsados;
+      this.palabrasUsadas.push(this.palabraSeleccionada);
+      this.rondasGanadas++;
+      this.rondaGanada = true;
 
+      if (this.palabrasUsadas.length === this.palabras.length) {
+        this.juegoGanado = true;
+        this.rondaGanada = false;
+      }
+    }
     if (this.intentosUsados >= this.intentos) {
       this.juegoPerdido = true;
     }
-
   }
 
   obtenerImagenAhorcado(): string {
     return this.imagenesAhorcado[this.intentosUsados];
-
   }
 
   volverAlHome() {
     this.router.navigate(['/home']);
-
   }
 
   listoParaJugar() {
     this.iniciarJuego();
+  }
 
+  reiniciarJuego() {
+    this.palabraSeleccionada = '';
+    this.letrasAdivinadas = [];
+    this.intentosUsados = 0;
+    this.letrasIncorrectas = [];
+    this.juegoIniciado = false;
+    this.juegoGanado = false;
+    this.juegoPerdido = false;
+    this.puntos = 0;
+    this.palabrasUsadas = [];
+    this.rondasGanadas = 0;
+    this.rondaGanada = false;
   }
 
 }

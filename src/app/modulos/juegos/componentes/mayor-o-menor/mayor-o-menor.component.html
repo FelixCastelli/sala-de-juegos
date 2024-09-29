@@ -4,6 +4,22 @@
 
     <div *ngIf="!juegoIniciado" class="inicio-juego">
         <h2>¿Estás listo para jugar?</h2>
+
+        <div class="image-container">
+            <img src="https://firebasestorage.googleapis.com/v0/b/sala-de-juegos-59d90.appspot.com/o/Baraja_espa%C3%B1ola_completa.png?alt=media&token=7097f792-b827-41ac-b638-23c6697aa5c6" 
+            alt="Mayor-o-Menor" class="mayor-o-menor-imagen">
+        </div>
+
+        <p class="explicacion-juego">
+            Tenes que adivinar si la siguiente carta es mayor o menor a la que tenes en el momento.
+            <br><br>
+            Hay 50 cartas y vas sumando puntos en base a si acertas que es mayor o menor.
+            <br><br>
+            Si no acertas perdes puntos ¡Cuidado que podes quedar en puntos negativos!.
+            <br><br>
+            Cuando termines el mazo, el puntaje final será el que va a ir al ranking.
+        </p>
+
         <div class="modal-buttons">
             <button (click)="iniciarJuego()" class="btn-si">Sí</button>
             <button (click)="volverAlHome()" class="btn-volver">Volver</button>
@@ -18,18 +34,17 @@
             </div>
 
             <div class="puntaje">
-                <h2>Puntuación: {{ puntos }}</h2>
+                <h2>Tu Puntuación: {{ puntos }}</h2>
             </div>
 
-            <div *ngIf="!juegoPerdido" class="proxima-carta-container">
+            <div *ngIf="!partidaTerminada" class="proxima-carta-container">
                 <h3>Próxima Carta:</h3>
                 <div class="cartas">
                     <img [src]="cartaEscondida" alt="Carta dada vuelta" class="carta carta-escondida">
                 </div>
             </div>
 
-            <div *ngIf="juegoPerdido" class="proxima-carta-container">
-                <h3>La Carta era:</h3>
+            <div *ngIf="partidaTerminada" class="proxima-carta-container">
                 <div class="cartas">
                     <img *ngIf="proximaCarta" [src]="proximaCarta.src" alt="Siguiente Carta" class="carta">
                 </div>
@@ -37,18 +52,18 @@
         </div>
 
         <div class="botones-adivinar">
-            <h3 *ngIf="!juegoPerdido">La próxima carta es...</h3>
+            <h3 *ngIf="!partidaTerminada">La próxima carta es...</h3>
             <button (click)="adivinaMayor()" 
-                    [disabled]="juegoPerdido" 
+                    [disabled]="partidaTerminada" 
                     class="btn-mayor">Mayor</button>
             <button (click)="adivinaMenor()" 
-                    [disabled]="juegoPerdido" 
+                    [disabled]="partidaTerminada" 
                     class="btn-menor">Menor</button>
         </div>
 
-        <div *ngIf="juegoPerdido" class="partida-perdida">
-            <h2>¡Perdiste!</h2>
-            <button (click)="iniciarJuego()" class="btn-si">Jugar de nuevo</button>
+        <div *ngIf="partidaTerminada" class="partida-terminada">
+            <h2>¡Terminaste la partida!</h2>
+            <button (click)="reiniciarJuego()" class="btn-si">Jugar de nuevo</button>
         </div>
     </div>
 </div>
