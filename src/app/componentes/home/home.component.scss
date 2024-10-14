@@ -218,21 +218,32 @@
   background-color: #444;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-}
+  height: auto;
 
-.item-juego {
-  text-align: center;
-  margin: 10px;
-}
-
-.item-juego h2 {
-  color: white;
-  margin-bottom: 10px;
+  .item-juego {
+    text-align: center;
+    margin: 10px;
+    flex: 0 0 23%;
+    min-width: 200px;
+  }
 }
 
 .ahorcado-imagen,
+.preguntados-imagen,
 .mayor-menor-imagen {
   width: 300px;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  border-radius: 8px;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.cuatro-fotos-una-palabra-imagen {
+  width: 200px;
   height: auto;
   cursor: pointer;
   transition: transform 0.3s ease;

@@ -56,6 +56,24 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['/juegos/mayorOMenor']);
   }
 
+  irAPreguntados() {
+    if (!this.usuario) {
+      this.mostrarMensaje = true;
+      return;
+    }
+    this.mostrarMensaje = false;
+    this.router.navigate(['/juegos/preguntados']);
+  }
+
+  irACuatroFotosUnaPalabra() {
+    if (!this.usuario) {
+      this.mostrarMensaje = true;
+      return;
+    }
+    this.mostrarMensaje = false;
+    this.router.navigate(['/juegos/4-fotos-1-palabra']);
+  }
+
   async logOut() {
     await this.firebaseService.logOut();
     this.usuario = this.firebaseService.getCurrentUser();

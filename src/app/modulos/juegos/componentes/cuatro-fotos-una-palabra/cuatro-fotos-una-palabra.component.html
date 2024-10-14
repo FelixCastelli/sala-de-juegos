@@ -1,0 +1,75 @@
+<div class="ahorcado-container">
+    <button (click)="volverAlHome()" class="btn-volver">←</button>
+    <h1>4 Fotos, 1 Palabra</h1>
+
+    <div *ngIf="!juegoIniciado" class="modal">
+        <h2>¿Estás listo para jugar?</h2>
+        
+        <div class="image-container">
+            <img src="https://firebasestorage.googleapis.com/v0/b/sala-de-juegos-59d90.appspot.com/o/4-Fotos-1-Palabra-logo.png?alt=media&token=e8475bde-aa4c-4f7e-a2e1-88749f6e070d" 
+            alt="Juego de imágenes" class="ahorcado-imagen">
+        </div>
+
+        <p class="explicacion-juego">
+            Tenes que adivinar la palabra relacionada con las 4 imágenes.
+            <br><br>
+            Cada imagen te da pistas sobre la palabra a adivinar.
+            <br><br>
+            Usa las letras para formar la palabra.
+            <br><br>
+            Hay 6 intentos por palabra para adivinar las 10 palabras, vas sumando puntos en base a los intentos que te quedan al adivinar cada palabra.
+            <br><br>
+            Si te quedas sin intentos, perdes el juego.
+            <br><br>
+            Cuando termines todas las palabras o pierdas, el puntaje final será el que va a ir al ranking.
+        </p>
+
+        <button (click)="iniciarJuego()" class="btn-si">Sí</button>
+        <button (click)="volverAlHome()" class="btn-volver">Volver</button>
+    </div>
+
+    <div *ngIf="juegoIniciado">
+        <div class="image-container">
+            <img *ngFor="let imagen of imagenesActuales" [src]="imagen" alt="Imagen Pista" class="ahorcado-imagen">
+        </div>
+
+        <div class="palabra">
+            <span *ngFor="let letra of letrasAdivinadas">{{ letra }}</span>
+        </div>
+
+        <div class="teclado">
+            <button *ngFor="let letra of letras"
+                    (click)="adivinarLetra(letra)"
+                    [disabled]="letrasIncorrectas.includes(letra) || letrasAdivinadas.includes(letra) || juegoGanado || juegoPerdido">
+                {{ letra }}
+            </button>
+        </div>
+
+        <div class="intentos">
+            <p>Intentos restantes: {{ intentosMaximos - intentosUsados }}</p>
+        </div>
+    </div>
+
+    <div *ngIf="rondaGanada" class="ganado">
+        <h2>¡Felicitaciones ganaste la Ronda!</h2>
+        <p>La palabra era: '{{ palabraSeleccionada }}'</p>
+        <p>Puntuacion Actual: {{ puntos }}</p>
+        <button (click)="iniciarJuego()" class="btn-si">Siguiente palabra</button>
+    </div>
+
+    <div *ngIf="juegoGanado" class="ganado">
+        <h2>¡Felicitaciones ganaste!</h2>
+        <p>La palabra era: '{{ palabraSeleccionada }}'</p>
+        <p>Puntuacion Final: {{ puntos }}</p>
+        <button (click)="volverAlHome()" class="btn-volver">Volver</button>
+        <button (click)="reiniciarJuego()" class="btn-si">Jugar de Nuevo</button>
+    </div>
+
+    <div *ngIf="juegoPerdido" class="perdido">
+        <h2>¡Perdiste!</h2>
+        <p>La palabra era: '{{ palabraSeleccionada }}'</p>
+        <p>Puntuacion Final: {{ puntos }}</p>
+        <button (click)="volverAlHome()" class="btn-volver">Volver</button>
+        <button (click)="iniciarJuego()" class="btn-si">Volver a Intentar</button>
+    </div>
+</div>
