@@ -1,1 +1,53 @@
-<p>preguntados works!</p>
+<div class="preguntados-container">
+    <button (click)="volverAlHome()" class="btn-volver">←</button>
+    <h1>Preguntados</h1>
+
+    <div *ngIf="!juegoIniciado" class="modal">
+        <h2>¿Estás listo para jugar?</h2>
+        
+        <div class="image-container">
+            <img src="https://firebasestorage.googleapis.com/v0/b/sala-de-juegos-59d90.appspot.com/o/preguntados-logo.jpg?alt=media&token=7bc44ea0-c740-4709-ac04-d81133be79a5" 
+            alt="Juego de imágenes" class="preguntados-imagen">
+        </div>
+
+        <p class="explicacion-juego">
+            Tenes que adivinar la pregunta.
+            <br><br>
+            Hay 4 opciones relacionadas con la pregunta pero solo 1 es la correcta.
+            <br><br>
+            Tenes 1 intento para adivinar, vas sumando puntos cuando adivinas una pregunta.
+            <br><br>
+            Si no adivinas la pregunta, perdes.
+            <br><br>
+            Cuando pierdas, el puntaje final será el que va a ir al ranking.
+        </p>
+
+        <button (click)="iniciarJuego()" class="btn-si">Sí</button>
+        <button (click)="volverAlHome()" class="btn-volver">Volver</button>
+    </div>
+
+    <div *ngIf="juegoIniciado">
+        <div class="area-juego">
+            <div class="puntaje">
+                <h2>Tu Puntuación: {{ puntos }}</h2>
+            </div>
+            <div class="container_opciones">
+                <div class="card">
+                    {{question}}
+                    <img src={{imagen}} class="img">
+                </div>
+                    @for (opcion of opciones; track $index){
+                        <button class="trivia" (click)="animarRespuesta(opcion, $index)" id="{{$index}}" [disabled]="bloqueado">{{opcion}}</button>
+                    }
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="juegoPerdido" class="perdido">
+        <h2>¡Perdiste!</h2>
+        <p>La respuesta era: '{{ respuesta }}'</p>
+        <p>Puntuacion Final: {{ puntos }}</p>
+        <button (click)="volverAlHome()" class="btn-volver">Volver</button>
+        <button (click)="iniciarJuego()" class="btn-si">Volver a Intentar</button>
+    </div>
+</div>
