@@ -46,6 +46,25 @@
   }
 }
 
+.btn-encuesta {
+  background-color: #1DB954; /* Mismo verde de los otros botones */
+  color: white;
+  border-radius: 8px;
+  padding: 10px 20px;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 10px; /* Espaciado entre el botón y el correo */
+  font-family: 'Roboto', sans-serif;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-encuesta:hover {
+  background-color: #1ed760;
+  transform: scale(1.05);
+}
+
 .user-info {
   display: flex;
   align-items: center;

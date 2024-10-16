@@ -5,6 +5,7 @@
     </div>
 
     <div class="user-info" *ngIf="usuario; else loginButton">
+      <button (click)="irAEncuesta()" class="btn-encuesta">Encuesta</button>
       <span class="user-email">{{ usuario?.email }}</span>
       <button (click)="logOut()" class="btn-log-out">Log Out</button>
     </div>

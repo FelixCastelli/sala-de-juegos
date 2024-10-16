@@ -1,0 +1,114 @@
+<div class="container">
+    <button (click)="volverAlHome()" class="btn-volver">←</button>
+    
+    <form [formGroup]="encuestaForm" (ngSubmit)="enviarEncuesta()">
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" formControlName="nombre" type="text" />
+            <div *ngIf="encuestaForm.get('nombre')?.touched || encuestaForm.get('nombre')?.dirty">
+                <div *ngIf="encuestaForm.get('nombre')?.errors?.['required']">
+                    <span class="error-message">El nombre es requerido.</span>
+                </div>
+                <div *ngIf="encuestaForm.get('nombre')?.errors?.['pattern']">
+                    <span class="error-message">No se aceptan números en el nombre.</span>
+                </div>
+            </div>
+        </div>
+  
+        <div class="form-group">
+            <label for="apellido">Apellido</label>
+            <input id="apellido" formControlName="apellido" type="text" />
+            <div *ngIf="encuestaForm.get('apellido')?.touched || encuestaForm.get('apellido')?.dirty">
+                <div *ngIf="encuestaForm.get('apellido')?.errors?.['required']">
+                    <span class="error-message">El apellido es requerido.</span>
+                </div>
+                <div *ngIf="encuestaForm.get('apellido')?.errors?.['pattern']">
+                    <span class="error-message">No se aceptan números en el apellido.</span>
+                </div>
+            </div>
+        </div>
+  
+        <div class="form-group">
+            <label for="edad">Edad</label>
+            <input id="edad" formControlName="edad" type="number" />
+            <div *ngIf="encuestaForm.get('edad')?.touched || encuestaForm.get('edad')?.dirty">
+                <div *ngIf="encuestaForm.get('edad')?.errors?.['required']">
+                    <span class="error-message">La edad es requerida.</span>
+                </div>
+                <div *ngIf="encuestaForm.get('edad')?.errors?.['min'] || encuestaForm.get('edad')?.errors?.['max']">
+                    <span class="error-message">La edad debe estar entre 18 y 99 años.</span>
+                </div>
+            </div>
+        </div>
+  
+      <div class="form-group">
+        <label for="telefono">Teléfono</label>
+        <input id="telefono" formControlName="telefono" type="text" />
+        <div *ngIf="encuestaForm.get('telefono')?.touched || encuestaForm.get('telefono')?.dirty">
+            <div *ngIf="encuestaForm.get('telefono')?.errors?.['required']">
+                <span class="error-message">El teléfono es requerido.</span>
+            </div>
+            <div *ngIf="encuestaForm.get('telefono')?.errors?.['pattern']">
+                <span class="error-message">Teléfono inválido. Debe tener 10 dígitos.</span>
+            </div>
+        </div>
+    </div>
+  
+      <div class="form-group">
+        <label>¿Tienes una mascota?</label>
+        <div>
+          <input id="mascotaSi" type="checkbox" formControlName="mascotaSi" (change)="onMascotaChange(true)" />
+          <label for="mascotaSi">Sí</label>
+        </div>
+        <div>
+          <input id="mascotaNo" type="checkbox" formControlName="mascotaNo" (change)="onMascotaChange(false)" />
+          <label for="mascotaNo">No</label>
+        </div>
+      </div>
+      
+  
+      <div class="form-group">
+        <label>¿Cuál es tu color favorito?</label>
+        <div class="color-options">
+            <input type="radio" id="color1" formControlName="colorFavorito" value="rojo" />
+            <label for="color1" class="radio-label"></label>
+            <span>Rojo</span>
+            
+            <input type="radio" id="color2" formControlName="colorFavorito" value="verde" />
+            <label for="color2" class="radio-label"></label>
+            <span>Verde</span>
+            
+            <input type="radio" id="color3" formControlName="colorFavorito" value="azul" />
+            <label for="color3" class="radio-label"></label>
+            <span>Azul</span>
+            
+            <input type="radio" id="colorOtro" formControlName="colorFavorito" value="otro" />
+            <label for="colorOtro" class="radio-label"></label>
+            <span>Otro</span>
+        </div>
+        <div *ngIf="encuestaForm.get('colorFavorito')?.invalid && (encuestaForm.get('colorFavorito')?.touched || encuestaForm.get('colorFavorito')?.dirty)">
+            <span class="error-message">Selecciona un color favorito.</span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="genero">Género de pelicula favorito</label>
+        <select id="genero" formControlName="generoFavorito" class="form-control">
+          <option value="" disabled selected>Selecciona un género</option>
+          <option value="acción">Acción</option>
+          <option value="comedia">Comedia</option>
+          <option value="drama">Drama</option>
+          <option value="terror">Terror</option>
+          <option value="ciencia ficción">Ciencia Ficción</option>
+          <option value="romance">Romance</option>
+        </select>
+        <div *ngIf="encuestaForm.get('generoFavorito')?.invalid && (encuestaForm.get('generoFavorito')?.touched || encuestaForm.get('generoFavorito')?.dirty)">
+          <span class="error-message">Selecciona un género de película.</span>
+        </div>
+      </div>
+  
+      <button type="submit" [disabled]="encuestaForm.invalid">Enviar Encuesta</button>
+    </form>
+  
+    <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+</div>

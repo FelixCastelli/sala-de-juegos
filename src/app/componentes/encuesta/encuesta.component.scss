@@ -1,0 +1,171 @@
+/* Contenedor que envuelve el formulario y el mensaje de éxito */
+.container {
+    display: flex;
+    flex-direction: column; /* Apilar el formulario y el mensaje de éxito verticalmente */
+    align-items: center; /* Centrar horizontalmente */
+    width: 100%; /* Asegurar que el contenedor ocupe todo el ancho */
+
+    .btn-volver {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background-color: #f44336;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    
+        &:hover {
+            background-color: #c62828;
+            transform: scale(1.05);
+        }
+    }
+}
+
+/* Estilos generales del formulario */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrar el formulario en el contenedor */
+    gap: 1rem; /* Espacio entre los elementos */
+}
+
+.form-group {
+    width: 100%; /* Asegurar que el grupo ocupe el 100% del ancho */
+    display: flex;
+    flex-direction: column; /* Apilar label y input verticalmente */
+    align-items: center; /* Centrar los elementos dentro de cada grupo */
+}
+
+label {
+    font-size: 1rem; /* Tamaño del texto del label */
+    color: white; /* Color del texto del título */
+    margin-bottom: 0.2rem; /* Espacio entre el label y el input */
+    width: 100%; /* Asegurarse de que el label ocupe el 100% del ancho del input */
+    text-align: center; /* Centrar el texto del label */
+}
+
+/* Ajustes para las opciones de color */
+.color-options {
+    display: flex;
+    justify-content: center; /* Alinear horizontalmente los radio buttons */
+    gap: 1rem; /* Espacio entre los radio buttons */
+}
+
+input {
+    width: 100%; /* Hacer los inputs del mismo ancho */
+    max-width: 400px; /* Máximo ancho para los inputs */
+    min-width: 200px; /* Ancho mínimo para los inputs */
+    padding: 0.5rem 1rem; /* Espaciado dentro del input */
+    background-color: #000; /* Fondo negro */
+    border: 1px solid #444; /* Borde gris oscuro */
+    color: white; /* Texto blanco en los inputs */
+    border-radius: 8px; /* Bordes redondeados */
+    font-size: 1rem; /* Tamaño de la fuente */
+}
+
+/* Estilo para los mensajes de error en rojo */
+.error-message {
+    color: red; /* Color del texto de error */
+    font-size: 0.9rem; /* Tamaño del texto de error */
+    margin-top: 0.25rem; /* Espacio entre el input y el mensaje de error */
+    text-align: center; /* Centrar el texto de error */
+    width: 100%; /* Asegurarte de que el mensaje ocupe el 100% del ancho del grupo */
+    max-width: 400px; /* Máximo ancho para el mensaje de error */
+}
+
+/* Botón de enviar estilizado */
+button {
+    padding: 0.7rem 1.5rem;
+    background-color: #1DB954; /* Verde habilitado */
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px; /* Bordes medio redondeados */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 200px; /* Botón más ancho */
+    text-align: center;
+}
+
+button:disabled {
+    background-color: #888; /* Gris cuando está deshabilitado */
+}
+
+button:hover:not(:disabled) {
+    background-color: #17a74a; /* Verde más oscuro al hacer hover */
+}
+
+/* Estilo para el mensaje de éxito */
+.success-message {
+    background-color: #28a745; /* Verde de éxito */
+    color: white; /* Color del texto */
+    padding: 1rem; /* Espaciado interno */
+    margin-top: 1rem; /* Espacio entre el botón y el mensaje de éxito */
+    border-radius: 8px; /* Bordes redondeados */
+    text-align: center; /* Centrar el texto */
+    width: 100%; /* Asegurar que el mensaje ocupe el ancho completo */
+    max-width: 400px; /* Máximo ancho del mensaje */
+}
+
+input[type="radio"] {
+    display: none; /* Oculta el radio button predeterminado */
+}
+
+.radio-label {
+    display: inline-block;
+    width: 1rem; /* Ancho del área del radio button */
+    height: 1rem; /* Altura del área del radio button */
+    border: 2px solid #444; /* Borde del radio button */
+    border-radius: 50%; /* Hacerlo redondeado */
+    margin-right: 0.5rem; /* Espacio entre el radio button y su etiqueta */
+    position: relative; /* Necesario para el posicionamiento del pseudo-elemento */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+}
+
+input[type="radio"]:checked + .radio-label {
+    background-color: #1DB954; /* Color cuando está seleccionado */
+}
+
+.radio-label:after {
+    content: "";
+    display: none; /* Ocultar el círculo interno por defecto */
+    width: 0.5rem; /* Ancho del círculo interno */
+    height: 0.5rem; /* Altura del círculo interno */
+    background-color: white; /* Color del círculo interno */
+    border-radius: 50%; /* Hacerlo redondeado */
+    position: absolute; /* Posicionar el círculo interno */
+    top: 50%; /* Centrar verticalmente */
+    left: 50%; /* Centrar horizontalmente */
+    transform: translate(-50%, -50%); /* Ajustar la posición */
+}
+
+input[type="radio"]:checked + .radio-label:after {
+    display: block; /* Mostrar el círculo interno cuando está seleccionado */
+}
+
+select {
+    width: 100%; /* Hacer el select del mismo ancho que los inputs */
+    max-width: 400px; /* Máximo ancho para el select */
+    min-width: 200px; /* Ancho mínimo para el select */
+    padding: 0.5rem 1rem; /* Espaciado dentro del select */
+    background-color: #000; /* Fondo negro */
+    border: 1px solid #444; /* Borde gris oscuro */
+    color: white; /* Texto blanco en el select */
+    border-radius: 8px; /* Bordes redondeados */
+    font-size: 1rem; /* Tamaño de la fuente */
+    appearance: none; /* Elimina el estilo predeterminado del select */
+    -webkit-appearance: none; /* Para navegadores basados en WebKit */
+    -moz-appearance: none; /* Para navegadores Firefox */
+}
+
+/* Estilo opcional para las opciones del select */
+select option {
+    background-color: #000; /* Fondo negro para las opciones */
+    color: white; /* Texto blanco para las opciones */
+}

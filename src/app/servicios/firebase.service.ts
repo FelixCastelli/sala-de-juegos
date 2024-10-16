@@ -98,4 +98,24 @@ export class FirebaseService {
     }
   }
 
+  async guardarDatosEncuesta(datosEncuesta: any): Promise<void> {
+    try {
+      if (this.currentUser) {
+        const encuestaCollection = collection(this.firestore, 'encuestas');
+        const encuestaData = {
+          ...datosEncuesta,  // Incluye los datos de la encuesta
+          usuario: this.currentUser.email, // Identifica al usuario por su email
+          fecha: new Date() // Guarda la fecha de la encuesta
+        };
+        await addDoc(encuestaCollection, encuestaData); // Almacena en Firestore
+        console.log('Datos de la encuesta guardados correctamente');
+      } else {
+        throw new Error('No hay un usuario autenticado');
+      }
+    } catch (error) {
+      console.error('Error al guardar los datos de la encuesta:', error);
+      throw error;
+    }
+  }
+
 }

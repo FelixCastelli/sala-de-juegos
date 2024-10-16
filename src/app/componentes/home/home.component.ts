@@ -74,6 +74,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['/juegos/4-fotos-1-palabra']);
   }
 
+  irAEncuesta() {
+    this.router.navigate(['/encuesta']);
+  }
+
   async logOut() {
     await this.firebaseService.logOut();
     this.usuario = this.firebaseService.getCurrentUser();
