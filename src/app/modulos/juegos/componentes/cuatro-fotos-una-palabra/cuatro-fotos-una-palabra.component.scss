@@ -126,4 +126,34 @@
             font-size: 32px;
         }
     }
+
+    .ranking-container {
+        margin-top: 20px;
+        color: white;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    
+    th, td {
+        padding: 10px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    th {
+        background-color: #1DB954;
+        color: white;
+    }
+    
+    tbody tr:nth-child(even) {
+        background-color: rgba(29, 185, 84, 0.1);
+    }
+    
+    tbody tr:hover {
+        background-color: rgba(29, 185, 84, 0.3);
+    }
 }

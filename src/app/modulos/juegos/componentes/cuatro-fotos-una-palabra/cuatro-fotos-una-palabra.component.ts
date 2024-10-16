@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { FirebaseService } from '../../../../servicios/firebase.service';
 
 @Component({
   selector: 'app-cuatro-fotos-una-palabra',
@@ -36,8 +37,9 @@ export class CuatroFotosUnaPalabraComponent {
   palabrasUsadas: string[] = [];
   rondasGanadas: number = 0;
   rondaGanada: boolean = false;
+  ranking: any[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private firebaseService: FirebaseService) {}
 
   iniciarJuego() {
     this.palabraSeleccionada = this.palabraRandom();
@@ -48,6 +50,7 @@ export class CuatroFotosUnaPalabraComponent {
     this.juegoPerdido = false;
     this.rondaGanada = false;
     this.juegoIniciado = true;
+    this.obtenerRanking();
 
     this.imagenesActuales = this.imagenes
     .filter(img => img.palabra === this.palabraSeleccionada)
@@ -95,26 +98,52 @@ export class CuatroFotosUnaPalabraComponent {
 
       if (this.palabrasUsadas.length === this.imagenes.length) {
         this.juegoGanado = true;
+        this.firebaseService.subirPuntosJuego("cuatro-fotos-una-palabra", this.puntos)
       }
     } else if (this.intentosUsados >= this.intentosMaximos) {
       this.juegoPerdido = true;
+      this.firebaseService.subirPuntosJuego("cuatro-fotos-una-palabra", this.puntos)
     }
   }
 
   reiniciarJuego() {
-    this.palabraSeleccionada = '';
-    this.letrasAdivinadas = [];
-    this.letrasIncorrectas = [];
-    this.intentosUsados = 0;
-    this.juegoGanado = false;
-    this.juegoPerdido = false;
-    this.juegoIniciado = false;
+    this.iniciarJuego();
     this.puntos = 0;
-    this.palabrasUsadas = [];
-    this.rondasGanadas = 0;
   }
 
   volverAlHome() {
     this.router.navigate(['/home']);
+  }
+
+  convertirFecha(timestamp: any): string {
+    const date = new Date(timestamp.seconds * 1000);
+    const dia = date.getDate().toString().padStart(2, '0');
+    const mes = (date.getMonth() + 1).toString().padStart(2, '0');
+    const año = date.getFullYear();
+    return `${dia}/${mes}/${año}`;
+  }
+
+  obtenerRanking() {
+    this.firebaseService.traerPuntosJuego("cuatro-fotos-una-palabra").subscribe(res => {
+      const rankingMap: { [key: string]: any } = {};
+  
+      res.forEach((punto: any) => {
+        const usuario = punto.usuario;
+        if (!rankingMap[usuario] || punto.puntos > rankingMap[usuario].puntos) {
+          rankingMap[usuario] = punto;
+        }
+      });
+  
+      const usuarioActual = this.firebaseService.getCurrentUser()?.email;
+      const mejorPuntajeActual = usuarioActual ? rankingMap[usuarioActual] : null;
+  
+      this.ranking = Object.values(rankingMap);
+      if (mejorPuntajeActual) {
+        if (!this.ranking.find((p) => p.usuario === usuarioActual)) {
+          this.ranking.push(mejorPuntajeActual);
+        }
+      }
+      console.log(this.ranking);
+    });
   }
 }

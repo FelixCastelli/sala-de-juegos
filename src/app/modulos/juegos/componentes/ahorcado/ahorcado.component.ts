@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { FirebaseService } from '../../../../servicios/firebase.service';
 
 @Component({
   selector: 'app-ahorcado',
@@ -31,8 +32,9 @@ export class AhorcadoComponent {
   palabrasUsadas: string[] = [];
   rondasGanadas: number = 0;
   rondaGanada: boolean = false;
+  ranking: any[] = [];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private firebaseService: FirebaseService) { }
 
   iniciarJuego() {
     this.palabraSeleccionada = this.palabraRandom();
@@ -43,6 +45,7 @@ export class AhorcadoComponent {
     this.juegoGanado = false;
     this.juegoPerdido = false;
     this.rondaGanada = false;
+    this.obtenerRanking();
   }
 
   palabraRandom(): string {
@@ -83,10 +86,12 @@ export class AhorcadoComponent {
       if (this.palabrasUsadas.length === this.palabras.length) {
         this.juegoGanado = true;
         this.rondaGanada = false;
+        this.firebaseService.subirPuntosJuego("ahorcado", this.puntos)
       }
     }
     if (this.intentosUsados >= this.intentos) {
       this.juegoPerdido = true;
+      this.firebaseService.subirPuntosJuego("ahorcado", this.puntos)
     }
   }
 
@@ -103,17 +108,40 @@ export class AhorcadoComponent {
   }
 
   reiniciarJuego() {
-    this.palabraSeleccionada = '';
-    this.letrasAdivinadas = [];
-    this.intentosUsados = 0;
-    this.letrasIncorrectas = [];
-    this.juegoIniciado = false;
-    this.juegoGanado = false;
-    this.juegoPerdido = false;
+    this.iniciarJuego();
     this.puntos = 0;
-    this.palabrasUsadas = [];
-    this.rondasGanadas = 0;
-    this.rondaGanada = false;
+  }
+
+  convertirFecha(timestamp: any): string {
+    const date = new Date(timestamp.seconds * 1000);
+    const dia = date.getDate().toString().padStart(2, '0');
+    const mes = (date.getMonth() + 1).toString().padStart(2, '0');
+    const año = date.getFullYear();
+    return `${dia}/${mes}/${año}`;
+  }
+
+  obtenerRanking() {
+    this.firebaseService.traerPuntosJuego("ahorcado").subscribe(res => {
+      const rankingMap: { [key: string]: any } = {};
+  
+      res.forEach((punto: any) => {
+        const usuario = punto.usuario;
+        if (!rankingMap[usuario] || punto.puntos > rankingMap[usuario].puntos) {
+          rankingMap[usuario] = punto;
+        }
+      });
+  
+      const usuarioActual = this.firebaseService.getCurrentUser()?.email;
+      const mejorPuntajeActual = usuarioActual ? rankingMap[usuarioActual] : null;
+  
+      this.ranking = Object.values(rankingMap);
+      if (mejorPuntajeActual) {
+        if (!this.ranking.find((p) => p.usuario === usuarioActual)) {
+          this.ranking.push(mejorPuntajeActual);
+        }
+      }
+      console.log(this.ranking);
+    });
   }
 
 }

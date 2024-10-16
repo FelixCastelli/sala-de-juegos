@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PreguntadosService } from '../../../../servicios/preguntados.service';
 import { FirebaseService } from '../../../../servicios/firebase.service';
@@ -23,6 +23,7 @@ export class PreguntadosComponent {
   question : string = "";
   opciones : string[] = [];
   categorias : string[] = ["geography", "arts%26literature", "entertainment", "science%26nature", "sports%26leisure", "history"];
+  ranking: any[] = [];
 
   iniciarJuego(){
     this.obtenerTrivia(this.obtenerCategoria());
@@ -30,6 +31,7 @@ export class PreguntadosComponent {
     this.puntos = 0;
     this.juegoIniciado = true;
     this.juegoPerdido = false;
+    this.obtenerRanking();
   }
 
   generarRandom(min: number, max: number): number {
@@ -71,7 +73,7 @@ export class PreguntadosComponent {
         buttonElement.style.backgroundColor = "#c43323";
         buttonElement.style.boxShadow = "0px 4px 10px rgba(229, 77, 46, 0.4)";
         await setTimeout(()=>{
-          // this.database.subirPuntosJuego("preguntados", this.auth.nombre, this.puntos, this.obtenerFecha())
+          this.firebaseService.subirPuntosJuego("preguntados", this.puntos)
           this.jugando = false;
           this.juegoPerdido = true;
           buttonElement.classList.remove("animar");
@@ -108,35 +110,36 @@ export class PreguntadosComponent {
     this.router.navigate(['/home']);
   }
 
-  // obtenerFecha(){
-  //   const timestamp = Date.now();
-  //   const fecha = new Date(timestamp);
+  convertirFecha(timestamp: any): string {
+    const date = new Date(timestamp.seconds * 1000);
+    const dia = date.getDate().toString().padStart(2, '0');
+    const mes = (date.getMonth() + 1).toString().padStart(2, '0');
+    const año = date.getFullYear();
+    return `${dia}/${mes}/${año}`;
+  }
 
-  //   let dia = fecha.getDate();
-  //   let mes = fecha.getMonth() + 1;
-  //   let año = fecha.getFullYear();
-  //   let hora = fecha.getHours();
-  //   let minutos = fecha.getMinutes();
-  //   return `${dia}/${mes}/${año} ${hora}:${minutos}`;
-  // }
-
-  // obtenerRanking(){
-  //   this.database.traerPuntosJuego("preguntados").subscribe(res=>{
-  //     this.ranking = res;
-  //     console.log(this.ranking);
-  //     let tabla : string = ""
-  //     this.ranking.forEach((element:any) => {
-  //       console.log(element)
-  //       tabla += `
-  //       <tr>
-  //           <td>${element.usuario}</td>
-  //           <td>${element.puntos}</td>
-  //           <td>${element.fechaString}</td>
-  //       </tr>
-  //       `;
-  //     });
-  //     (<HTMLElement>document.getElementById("table_ranking")).innerHTML = tabla;
-  //   });
-  // }
+  obtenerRanking() {
+    this.firebaseService.traerPuntosJuego("preguntados").subscribe(res => {
+      const rankingMap: { [key: string]: any } = {};
+  
+      res.forEach((punto: any) => {
+        const usuario = punto.usuario;
+        if (!rankingMap[usuario] || punto.puntos > rankingMap[usuario].puntos) {
+          rankingMap[usuario] = punto;
+        }
+      });
+  
+      const usuarioActual = this.firebaseService.getCurrentUser()?.email;
+      const mejorPuntajeActual = usuarioActual ? rankingMap[usuarioActual] : null;
+  
+      this.ranking = Object.values(rankingMap);
+      if (mejorPuntajeActual) {
+        if (!this.ranking.find((p) => p.usuario === usuarioActual)) {
+          this.ranking.push(mejorPuntajeActual);
+        }
+      }
+      console.log(this.ranking);
+    });
+  }
 
 }

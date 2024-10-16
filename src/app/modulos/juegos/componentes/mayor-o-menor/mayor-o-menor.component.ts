@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { FirebaseService } from '../../../../servicios/firebase.service';
 
 @Component({
   selector: 'app-mayor-o-menor',
@@ -66,8 +67,9 @@ export class MayorOMenorComponent {
   partidaTerminada: boolean = false;
   mostrarSiguienteCarta: boolean = false;
   juegoIniciado: boolean = false;
+  ranking: any[] = [];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private firebaseService: FirebaseService) { }
 
   iniciarJuego() {
     this.puntos = 0;
@@ -76,6 +78,7 @@ export class MayorOMenorComponent {
     this.sacarCarta();
     this.juegoIniciado = true;
     this.cartasUsadas = [];
+    this.obtenerRanking();
   }
 
   sacarCarta() {
@@ -89,6 +92,7 @@ export class MayorOMenorComponent {
   obtenerProximaCarta(): { src: string; value: number } | null {
     if (this.cartas.length === 0) {
       this.partidaTerminada = true;
+      this.firebaseService.subirPuntosJuego("mayor-o-menor", this.puntos)
     }
     const indiceRandom = Math.floor(Math.random() * this.cartas.length);
     const nuevaCarta = this.cartas[indiceRandom];
@@ -208,5 +212,37 @@ export class MayorOMenorComponent {
       { src: 'https://firebasestorage.googleapis.com/v0/b/sala-de-juegos-59d90.appspot.com/o/11%20oro.png?alt=media&token=8234c8a1-1c1d-4bcd-99dc-d456d3d8c5d4', value: 11 },
       { src: 'https://firebasestorage.googleapis.com/v0/b/sala-de-juegos-59d90.appspot.com/o/12%20oro.png?alt=media&token=d0b2e3e1-e45f-405f-bc0f-8b5264919d94', value: 12 }
     ]
+  }
+
+  convertirFecha(timestamp: any): string {
+    const date = new Date(timestamp.seconds * 1000);
+    const dia = date.getDate().toString().padStart(2, '0');
+    const mes = (date.getMonth() + 1).toString().padStart(2, '0');
+    const año = date.getFullYear();
+    return `${dia}/${mes}/${año}`;
+  }
+
+  obtenerRanking() {
+    this.firebaseService.traerPuntosJuego("mayor-o-menor").subscribe(res => {
+      const rankingMap: { [key: string]: any } = {};
+  
+      res.forEach((punto: any) => {
+        const usuario = punto.usuario;
+        if (!rankingMap[usuario] || punto.puntos > rankingMap[usuario].puntos) {
+          rankingMap[usuario] = punto;
+        }
+      });
+  
+      const usuarioActual = this.firebaseService.getCurrentUser()?.email;
+      const mejorPuntajeActual = usuarioActual ? rankingMap[usuarioActual] : null;
+  
+      this.ranking = Object.values(rankingMap);
+      if (mejorPuntajeActual) {
+        if (!this.ranking.find((p) => p.usuario === usuarioActual)) {
+          this.ranking.push(mejorPuntajeActual);
+        }
+      }
+      console.log(this.ranking);
+    });
   }
 }

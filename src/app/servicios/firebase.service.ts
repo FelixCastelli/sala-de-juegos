@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { FirebaseApp, initializeApp } from '@angular/fire/app';
 import { Auth, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, User } from '@angular/fire/auth';
-import { Firestore } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, query, orderBy, collectionData } from '@angular/fire/firestore';
 import { enviromentConfig } from '../enviroment.config';
 import { getFirestore } from '@firebase/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +40,6 @@ export class FirebaseService {
   async logIn(email: string, contrasenia: string): Promise<void> {
     try {
       await signInWithEmailAndPassword(this.auth, email, contrasenia);
-      console.log('Usuario logeado correctamente');
     } catch (error) {
       throw error;
     }
@@ -50,7 +49,6 @@ export class FirebaseService {
   async registro(email: string, contrasenia: string): Promise<void> {
     try {
       await createUserWithEmailAndPassword(this.auth, email, contrasenia);
-      console.log('Usuario registrado correctamente');
     } catch (error) {
       throw error;
     }
@@ -60,7 +58,6 @@ export class FirebaseService {
   getUserLogged(){
     let afAuth = inject(AngularFireAuth);
     return afAuth.authState;
-
   }
 
   async logOut(): Promise<void> {
@@ -69,6 +66,35 @@ export class FirebaseService {
       console.log('Usuario deslogueado correctamente');
     } catch (error) {
       console.error('Error al desloguearse', error);
+    }
+  }
+
+  async subirPuntosJuego(juego: string, puntos: number): Promise<void> {
+    try {
+      if (puntos > 0 && this.currentUser) {
+        let col = collection(this.firestore, juego);
+        let obj = {
+          fecha: new Date(), 
+          usuario: this.currentUser.email,
+          puntos: puntos
+        };
+        await addDoc(col, obj);
+        console.log('Puntos subidos correctamente');
+      }
+    } catch (error) {
+      console.error('Error al subir los puntos', error);
+      throw error;
+    }
+  }
+
+  traerPuntosJuego(juego: string): Observable<any[]> {
+    try {
+      const colRef = collection(this.firestore, juego);
+      const q = query(colRef, orderBy('puntos', 'desc'));
+      return collectionData(q, { idField: 'id' });
+    } catch (error) {
+      console.error('Error al traer los puntos del juego', error);
+      throw error;
     }
   }
 

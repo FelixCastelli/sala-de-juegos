@@ -50,4 +50,24 @@
         <button (click)="volverAlHome()" class="btn-volver">Volver</button>
         <button (click)="iniciarJuego()" class="btn-si">Volver a Intentar</button>
     </div>
+
+    <div *ngIf="ranking.length > 0" class="ranking-container">
+        <h2>Ranking</h2>
+        <table id="table_ranking">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Puntos</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let record of ranking">
+                    <td>{{record.usuario}}</td>
+                    <td>{{record.puntos}}</td>
+                    <td>{{convertirFecha(record.fecha)}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
